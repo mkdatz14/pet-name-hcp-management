@@ -26,8 +26,9 @@ resource "tfe_workspace" "pet_name" {
     project_id = local.tier_projects[each.value.tier]
 
     vcs_repo {
-        identifier = "mkdatz14/pet-name-infra"
-        oauth_token_id = data.tfe_outputs.hcp_management.values.github_token_id
+        identifier = local.pet_name_repo
+        github_app_installation_id = local.github_app_installation_id
+        oauth_token_id = local.github_app_installation_id == null ? local.github_oauth_token_id : null
         branch = "main"
     }
 
