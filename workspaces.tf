@@ -26,7 +26,7 @@ resource "tfe_workspace" "pet_name" {
     project_id = local.tier_projects[each.value.tier]
 
     vcs_repo {
-        identifier = "mkdatz/terraform-random-pet-name"
+        identifier = "mkdatz14/pet-name-infra"
         oauth_token_id = data.tfe_outputs.hcp_management.values.github_token_id
         branch = "main"
     }
