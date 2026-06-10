@@ -1,14 +1,14 @@
 locals {
     pet_name_envs = {
-        dev1 = {tier = "dev", auto_apply = true},
-        dev2 = {tier = "dev", auto_apply = true},
-        dev3 = {tier = "dev", auto_apply = true},
-        staging1 = {tier = "staging", auto_apply = false},
-        staging2 = {tier = "staging", auto_apply = false},
-        staging3 = {tier = "staging", auto_apply = false},
-        prod1 = {tier = "prod", auto_apply = false},
-        prod2 = {tier = "prod", auto_apply = false},
-        prod3 = {tier = "prod", auto_apply = false},
+        dev1 = {tier = "dev", branch = "dev", auto_apply = true},
+        dev2 = {tier = "dev", branch = "dev", auto_apply = true},
+        dev3 = {tier = "dev", branch = "dev", auto_apply = true},
+        staging1 = {tier = "staging", branch = "staging", auto_apply = false},
+        staging2 = {tier = "staging", branch = "staging", auto_apply = false},
+        staging3 = {tier = "staging", branch = "staging", auto_apply = false},
+        prod1 = {tier = "prod", branch = "prod", auto_apply = false},
+        prod2 = {tier = "prod", branch = "prod", auto_apply = false},
+        prod3 = {tier = "prod", branch = "prod", auto_apply = false},
     }
 
     tier_projects = {
@@ -29,7 +29,7 @@ resource "tfe_workspace" "pet_name" {
         identifier = local.pet_name_repo
         github_app_installation_id = local.github_app_installation_id
         oauth_token_id = local.github_app_installation_id == null ? local.github_oauth_token_id : null
-        branch = each.key
+        branch = each.value.branch
     }
 
     auto_apply = each.value.auto_apply
