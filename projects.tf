@@ -12,3 +12,8 @@ resource "tfe_project" "staging" {
     organization = local.organization
     name = "Pet Name - staging"
 }
+
+resource "tfe_project" "shared" {
+    organization = local.organization
+    name = "Pet Name - shared"
+}
