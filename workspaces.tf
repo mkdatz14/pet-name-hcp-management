@@ -24,6 +24,7 @@ resource "tfe_workspace" "pet_name" {
     organization = local.organization
     name = "pet-name-${each.key}"
     project_id = local.tier_projects[each.value.tier]
+    queue_all_runs = false
 
     vcs_repo {
         identifier = local.pet_name_repo
