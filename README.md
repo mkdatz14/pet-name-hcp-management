@@ -54,3 +54,7 @@ Each variable supports these fields:
 - `sensitive`: Optional boolean. Defaults to `false`.
 
 Variable sets are best for shared, stable values. User-provided values that change per deployment should still be handled by the deployment workflow or workspace-specific variables, because variable set values are persistent.
+
+## Registry module tagging note
+
+For `tfe_registry_module`, HCP Terraform requires `branch` to be unset when `tag_prefix` is configured. If both are set, updates can fail with "VCS branch must be empty to enable tags".
