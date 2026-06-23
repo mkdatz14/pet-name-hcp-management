@@ -14,3 +14,43 @@ These workspaces now set `queue_all_runs = false`. This preserves the VCS linkag
 Deployments are expected to be started manually by the targeted GitHub Actions workflow, which can queue only the requested deployment workspaces such as `dev2` or `staging1,staging3`.
 
 This change does not use trigger prefixes or trigger patterns. Those settings only filter which file changes can start a VCS-triggered run; they do not disable the automatic queueing behavior.
+
+## YAML-driven variable sets
+
+Variable sets can be defined from YAML instead of hard-coded Terraform resources. By default, Terraform looks for `variable-sets.yaml` in this directory. You can also pass the YAML content directly with the `variable_sets_yaml` Terraform variable; direct YAML content takes precedence over the file path.
+
+Start from `variable-sets.yaml.example`:
+
+```yaml
+variable_sets:
+	dev:
+		name: pet-name-dev
+		description: Variables shared by pet-name development workspaces.
+		projects:
+			- dev
+		variables:
+			environment:
+				value: dev
+				category: terraform
+				description: Environment name for development workspaces.
+```
+
+Each variable set supports these fields:
+
+- `name`: HCP Terraform variable set name. Defaults to `pet-name-<set key>`.
+- `description`: Optional variable set description.
+- `global`: Optional boolean. Defaults to `false`.
+- `projects`: Optional list of project keys to attach to. Supported keys are `dev`, `staging`, `prod`, and `shared`.
+- `workspaces`: Optional list of workspace keys to attach to. Supported keys are `dev1`, `dev2`, `dev3`, `staging1`, `staging2`, `staging3`, `prod1`, `prod2`, and `prod3`.
+- `variables`: Map of variables to create in the variable set.
+
+Each variable supports these fields:
+
+- `key`: Optional HCP Terraform variable key. Defaults to the YAML map key.
+- `value`: Required variable value. Lists and maps are JSON-encoded.
+- `category`: Optional category, usually `terraform` or `env`. Defaults to `terraform`.
+- `description`: Optional variable description.
+- `hcl`: Optional boolean for HCL variable values. Defaults to `false`.
+- `sensitive`: Optional boolean. Defaults to `false`.
+
+Variable sets are best for shared, stable values. User-provided values that change per deployment should still be handled by the deployment workflow or workspace-specific variables, because variable set values are persistent.

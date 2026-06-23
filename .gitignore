@@ -16,6 +16,10 @@ crash.*.log
 *.tfvars
 *.tfvars.json
 
+# Exclude variable sets YAML file which may contain sensitive variable values.
+# Commit variable-sets.yaml.example instead.
+variable-sets.yaml
+
 # Ignore override files as they are usually used to override resources locally and so
 # are not checked in
 override.tf

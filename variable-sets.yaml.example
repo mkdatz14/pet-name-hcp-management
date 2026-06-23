@@ -1,0 +1,56 @@
+variable_sets:
+  shared:
+    name: pet-name-shared
+    description: Shared variables for all pet-name workspaces.
+    projects:
+      - shared
+    variables:
+      prefix_default:
+        key: prefix_default
+        value: Fluffy
+        category: terraform
+        description: Default prefix value available to pet-name workspaces.
+
+  dev:
+    name: pet-name-dev
+    description: Variables shared by pet-name development workspaces.
+    projects:
+      - dev
+    variables:
+      environment:
+        value: dev
+        category: terraform
+        description: Environment name for development workspaces.
+
+  staging:
+    name: pet-name-staging
+    description: Variables shared by pet-name staging workspaces.
+    projects:
+      - staging
+    variables:
+      environment:
+        value: staging
+        category: terraform
+        description: Environment name for staging workspaces.
+
+  prod:
+    name: pet-name-prod
+    description: Variables shared by pet-name production workspaces.
+    projects:
+      - prod
+    variables:
+      environment:
+        value: prod
+        category: terraform
+        description: Environment name for production workspaces.
+
+  dev1-only:
+    name: pet-name-dev1-only
+    description: Variables attached only to the dev1 workspace.
+    workspaces:
+      - dev1
+    variables:
+      prefix:
+        value: dev1
+        category: terraform
+        description: Prefix for the dev1 workspace.
